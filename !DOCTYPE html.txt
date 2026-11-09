@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Zaaa! 🎂🧸🤍</title>
+  <script src="https://jsdelivr.net"></script>
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: radial-gradient(circle, #ffe5ec 0%, #ffc2d1 60%, #e8aeef 100%);
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .font-cute { font-family: 'Fredoka', cursive; }
+    .font-romantic { font-family: 'Sacramento', cursive; }
+    .card-container {
+      width: 90%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(255, 105, 180, 0.25);
+      border: 4px solid #ffccd5;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      margin: 20px auto;
+      box-sizing: border-box;
+    }
+    .page { display: none; }
+    .page-active { display: block; }
+    .btn-pink {
+      background: linear-gradient(to right, #ff85a1, #ff99ac, #ff5c8a);
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      font-size: 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 92, 138, 0.4);
+      transition: all 0.2s ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-pink:hover { transform: scale(1.05); filter: brightness(1.05); }
+    .btn-pink:active { transform: scale(0.95); }
+    .polaroid {
+      background: white;
+      padding: 14px 14px 24px 14px;
+      box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+      transform: rotate(-2deg);
+      border-radius: 16px;
+      margin: 15px auto;
+      max-width: 240px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .polaroid:hover { transform: rotate(0deg) scale(1.04); }
+    .polaroid img { width: 100%; height: auto; border-radius: 8px; object-fit: cover; }
+    .tag-polaroid {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffe5ec;
+      color: #ff477e;
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .doa-box {
+      background: linear-gradient(to right, #fff5f6, #fff0f3);
+      border: 1px solid #ffccd5;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      color: #4a4a4a;
+      line-height: 1.6;
+    }
+    .audio-player {
+      background: rgba(255, 240, 243, 0.8);
+      border-radius: 16px;
+      padding: 12px;
+      border: 1px solid #ffccd5;
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .audio-info { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; }
+    .audio-bar { width: 100%; height: 4px; border-radius: 10px; margin-top: 8px; position: relative; background: #ffd0d6; }
+    .audio-progress { background: #ff477e; height: 100%; width: 65%; border-radius: 10px; }
+    .calendar-box { background: white; border: 2px solid #ffe5ec; border-radius: 16px; padding: 12px; margin-bottom: 15px; }
+    .calendar-grid { display: grid; grid-template-cols: repeat(7, 1fr); gap: 4px; font-size: 11px; margin-top: 8px; }
+    .day-name { color: #ff477e; font-weight: bold; }
+    .special-day {
+      background: linear-gradient(to bottom right, #ff85a1, #ff5c8a);
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+    }
+    .gift-grid { display: grid; grid-template-cols: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
+    .gift-box { background: #ffe5ec; border: 2px solid #ffb3c1; border-radius: 16px; padding: 15px 0; font-size: 32px; cursor: pointer; transition: all 0.2s; }
+    .gift-box:hover { background: #ffdee2; transform: scale(1.05); }
+    .game-area { width: 100%; height: 160px; background: rgba(255, 240, 243, 0.5); border: 2px dashed #ffb3c1; border-radius: 16px; position: relative; overflow: hidden; margin-bottom: 15px; }
+    #run-bear { position: absolute; font-size: 36px; cursor: pointer; transition: all 0.15s ease; top: 40%; left: 40%; }
+    .floating-emoji { position: absolute; user-select: none; pointer-events: none; animation: floatUp 6s ease-in-out infinite; }
+    @keyframes floatUp {
+      0% { transform: translateY(105vh) scale(0.6) rotate(0deg); opacity: 0.9; }
+      50% { transform: translateY(50vh) scale(1.2) rotate(15deg); }
+      100% { transform: translateY(-10vh) scale(0.8) rotate(-15deg); opacity: 0; }
+    }
+    .bounce-btn { animation: bounceGemes 1.5s infinite; }
+    @keyframes bounceGemes { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .click-sparkle { position: absolute; pointer-events: none; animation: sparkleFade 0.8s ease-out forwards; font-size: 24px; }
+    @keyframes sparkleFade { 0% { transform: scale(0.5) translateY(0); opacity: 1; } 100% { transform: scale(1.5) translateY(-25px); opacity: 0; } }
+    .text-pink-500 { color: #ff477e; }
+    .text-pink-600 { color: #e03166; }
+    .text-gray-600 { color: #5c5c5c; }
+  </style>
+</head>
+<body onclick="spawnSparkle(event)">
+  <div id="emoji-container" style="position: fixed; inset: 0; pointer-events: none; z-index: 0;"></div>
+  <div class="card-container">
+    <!-- HALAMAN 1 -->
+    <div id="page-1" class="page page-active">
+      <div style="font-size: 60px; margin-bottom: 10px;" class="bounce-btn">🧸</div>
+      <h1 class="font-romantic text-pink-500" style="font-size: 48px; margin: 0 0 5px 0; font-weight: bold;">Happy Birthday!</h1>
+      <p class="font-cute text-pink-600" style="margin: 0 0 10px 0;">🧸 ⊂(·o·)⊃ 💕</p>
+      <p class="font-cute text-gray-600" style="font-size: 15px; margin-bottom: 30px;">Ada kejutan manis spesial buat kamu... 🧸🤍✨</p>
+      <button onclick="nextPage(2)" class="btn-pink font-cute bounce-btn">Pencet Aku! 🧸🩷</button>
+    </div>
+    <!-- HALAMAN 2 -->
+    <div id="page-2" class="page" style="max-height: 80vh; overflow-y: auto; padding-right: 4px;">
+      <h2 class="font-romantic text-pink-600" style="font-size: 38px; margin: 0;">Dari Nanadd buat Zaaa 🤍</h2>
+      <p class="font-cute text-pink-500" style="font-size: 12px; margin: 0 0 15px 0;">ʕ•ᴥ•ʔ⊃❤️ Hugs & Love for You! 🧸</p>
+      <div class="polaroid" onclick="triggerConfetti()"><span class="tag-polaroid font-cute">🧸 Photo Memories 🎀</span><img src="image_AW55Sl.png" alt="Foto Kenangan Zaaa"></div>
+      <div class="doa-box">
+        <p class="font-romantic text-pink-500" style="font-size: 28px; margin: 0 0 5px 0; font-weight: bold;">Barakallah Fii Umrik ✨</p>
+        <p class="font-cute" style="margin: 0;">Semoga panjang umur, sehat selalu, dimudahkan segala urusannya, dan dilimpahkan kebahagiaan setiap hari. Tetap jadi orang baik dan ceria yaa! All the best wishes for you, Zaaa! 🎂🧸🤍</p>
+      </div>
+      <div class="audio-player">
+        <div class="audio-info">
+          <div style="font-size: 24px;">🎵</div>
+          <div style="flex: 1; min-width: 0;"><p class="font-cute text-pink-600" style="font-size: 13px; margin: 0; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Kue Coklat Balon Warna Warni 🎈</p><p class="font-cute text-gray-600" style="font-size: 10px; margin: 0;">Special Backsound for Zaaa</p></div>
+        </div>
+        <div class="audio-bar"><div class="audio-progress"></div></div>
+        <audio id="birthday-audio" src="kue-coklat-balon-warna-warni.mp3" preload="auto" loop></audio>
+        <button id="play-btn" onclick="toggleAudio()" class="btn-pink font-cute" style="font-size: 11px; padding: 6px 16px; margin-top: 10px;">▶️ Putar Musik</button>
+      </div>
+      <div class="calendar-box">
+        <div class="font-cute text-pink-500" style="font-size: 13px; font-weight: bold; display: flex; justify-content: space-between;"><span>November 2026</span><span>🧸✨</span></div>
+        <div class="calendar-grid font-cute">
+          <span class="day-name">S</span><span class="day-name">M</span><span class="day-name">T</span><span class="day-name">W</span><span class="day-name">T</span><span class="day-name">F</span><span class="day-name">S</span>
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span class="special-day">9<span class="bg-pink-400 text-white rounded-full animate-ping absolute w-5 h-5 opacity-40 top-0 left-0"></span></span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
+        </div>
+      </div>
+      <button onclick="nextPage(3)" class="btn-pink font-cute" style="font-size: 13px; padding: 10px 24px; margin-top: 10px;">Lanjut Main Game! 🎮✨</button>
+    </div>
+    <!-- HALAMAN 3 -->
+    <div id="page-3" class="page">
+      <h2 class="font-romantic text-pink-600" style="font-size: 38px; margin: 0;">Mini Game 1 🎁</h2>
+      <p class="font-cute text-gray-600" style="font-size: 13px;">Pilih salah satu kado keberuntunganmu! 🧸</p>
+      <div class="gift-grid">
+        <div onclick="openGift(1, this)" class="gift-box">🎁</div>
+Gunakan kode dengan hati-hati.
+🎁
+🎁
+
+
+Lanjut Game Kedua 🚀
+Mini Game 2 🧸
+Tangkap beruang yang lari ini sebanyak 3 kali!
+Skor: 0/3
+🧸
+Lihat Pesan Terakhir ❤️
+👑✨
+Happy Level Up!
+Terima kasih sudah mau mampir dan bermain sampai akhir yaa! Semoga hari-harimu selalu dipenuhi dengan tawa, kebaikan, dan hal-hal manis. 🤍
+- With Love, Nanadd -
+
+
+
+let currentScore = 0;
+function nextPage(pageNumber) {
+for(let i=1; i<=5; i++) { document.getElementById(page-${i}).classList.remove('page-active'); }
+document.getElementById(page-${pageNumber}).classList.add('page-active');
+if (pageNumber === 2) {
+triggerConfetti(); startFloatingEmojis();
+const audio = document.getElementById('birthday-audio');
+audio.play().then(() => { document.getElementById('play-btn').textContent = '⏸️ Jeda Musik'; }).catch(() => {});
+} else if (pageNumber === 3 || pageNumber === 5) { triggerConfetti(); } else if (pageNumber === 4) { moveBear(); }
+}
+function toggleAudio() {
+const audio = document.getElementById('birthday-audio'); const btn = document.getElementById('play-btn');
+if (audio.paused) { audio.play(); btn.textContent = '⏸️ Jeda Musik'; } else { audio.pause(); btn.textContent = '▶️ Putar Musik'; }
+}
+function triggerConfetti() { confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 }, colors: ['#ff85a1', '#ffb3c1', '#ffc2d1', '#f72585', '#b5179e'] }); }
+function openGift(giftNum, element) {
+const wishes = [
+"🎉 Selamat! Kamu dapet voucher gratis peluk dari Nanadd!",
+"✨ Yeay! Isi kadonya adalah pasokan kebahagiaan tak terbatas buat kamu!",
+"🌸 Kotak ini isinya tumpukan keberuntungan untuk satu tahun ke depan!"
+];
+document.getElementById('gift-result').textContent = wishes[giftNum - 1]; triggerConfetti(); document.getElementById('next-to-game2').style.display = 'block';
+}
+function moveBear() {
+if (currentScore >= 3) return; const bear = document.getElementById('run-bear');
+const randomTop = Math.floor(Math.random() * 70) + 5; const randomLeft = Math.floor(Math.random() * 75) + 5;
+bear.style.top = ${randomTop}%; bear.style.left = ${randomLeft}%;
+}
+function hitBear() {
+currentScore++; document.getElementById('bear-score').textContent = currentScore; triggerConfetti();
+if (currentScore >= 3) { document.getElementById('run-bear').textContent = '🥳'; document.getElementById('next-to-final').style.display = 'block'; } else { moveBear(); }
+}
+function spawnSparkle(e) {
+const sparkles = ['✨', '💖', '🤍', '🌸', '🎀']; const randomSparkle = sparkles[Math.floor(Math.random() * sparkles.length)];
+const el = document.createElement('div'); el.className = 'click-sparkle'; el.textContent = randomSparkle;
+el.style.left = ${e.clientX - 12}px; el.style.top = ${e.clientY - 12}px; document.body.appendChild(el); setTimeout(() => el.remove(), 800);
+}
+function popHeart(element) { confetti({ particleCount: 20, angle: 60, spread: 55, origin: { x: 0 } }); confetti({ particleCount: 20, angle: 120, spread: 55, origin: { x: 1 } }); }
+let emojiInterval;
+function startFloatingEmojis() {
+if (emojiInterval) clearInterval(emojiInterval); const container = document.getElementById('emoji-container'); const emojis = ['🧸', '💖', '🤍', '✨', '🎀', '🎈'];
+emojiInterval = setInterval(() => {
+const el = document.createElement('div'); el.className = 'floating-emoji'; el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+el.style.left = ${Math.random() * 100}vw; el.style.animationDuration = ${4 + Math.random() * 4}s; el.style.fontSize = ${20 + Math.random() * 24}px;
+container.appendChild(el); setTimeout(() => el.remove(), 7000);
+}, 400);
+}
+
+
